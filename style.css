@@ -294,10 +294,15 @@ h1{
    HOLD HEART
 ========================================= */
 .hold-heart{
-  font-size:50px;
-  margin-top:20px;
+  font-size:70px;
+  display:inline-block;
   cursor:pointer;
-  transition:0.2s ease;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:manipulation;
+  text-shadow: 0 0 30px rgba(255,77,125,0.45);
+}
+
 }
 .hold-heart:active{transform:scale(1.2);}
 
@@ -511,4 +516,286 @@ h1{
 @media (max-width: 520px){
   .polaroid img{height:220px;}
   .letters{grid-template-columns:1fr;}
+}
+
+/* ==============================
+   Expandable Romantic Letters
+============================== */
+
+.letters {
+  display: grid;
+  gap: 18px;
+}
+
+.letter {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 26px;
+  padding: 22px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+  cursor: pointer;
+  transition: all 0.35s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.letter:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 90px rgba(0,0,0,0.45);
+}
+
+.letter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.letter-header strong {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.letter-icon {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Hidden content */
+.letter-content {
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  margin-top: 0;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.8;
+}
+
+/* When opened */
+.letter.open {
+  background:
+    radial-gradient(800px 400px at 20% 0%, rgba(255,77,125,0.18), transparent),
+    rgba(20,16,26,0.95);
+}
+
+.letter.open .letter-content {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+.letter.open .letter-icon {
+  transform: rotate(180deg);
+}
+
+/* =========================
+   NO-TOP POPUPS SYSTEM
+   (Popover anchored near clicked item)
+========================= */
+
+.popover{
+  position: fixed;
+  z-index: 9999;
+  padding: 14px 14px 12px;
+  border-radius: 18px;
+  background:
+    radial-gradient(600px 260px at 20% 0%, rgba(255,77,125,0.22), transparent),
+    rgba(20,16,26,0.96);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 30px 120px rgba(0,0,0,0.65);
+  backdrop-filter: blur(18px);
+  color: rgba(255,255,255,0.92);
+}
+
+.popover.hidden{display:none;}
+
+.popover-title{
+  font-weight: 800;
+  letter-spacing: .02em;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.popover-body{
+  color: rgba(255,255,255,0.82);
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.popover-x{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:32px;
+  height:32px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.85);
+  cursor:pointer;
+}
+
+/* =========================
+   Open When letters (inline accordion)
+========================= */
+.letters{display:grid; gap:18px;}
+.letter{border-radius:26px; overflow:hidden;}
+
+.letter-btn{
+  width:100%;
+  text-align:left;
+  border:none;
+  border-radius:26px;
+  padding:22px;
+  cursor:pointer;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+  color: white;
+  transition: all 0.35s ease;
+}
+
+.letter-btn:focus{outline:none;}
+
+.letter-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.letter-header strong{font-size:18px;font-weight:800;}
+.letter-icon{font-size:20px; transition: transform 0.35s ease;}
+
+.letter-content{
+  max-height:0;
+  opacity:0;
+  overflow:hidden;
+  transition: max-height 0.45s ease, opacity 0.35s ease;
+  color: rgba(255,255,255,0.84);
+  line-height: 1.85;
+  margin-top:0;
+}
+
+.letter.open .letter-btn{
+  background:
+    radial-gradient(800px 400px at 20% 0%, rgba(255,77,125,0.18), transparent),
+    rgba(20,16,26,0.95);
+  box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
+}
+
+.letter.open .letter-content{
+  max-height: 420px;
+  opacity: 1;
+  margin-top: 16px;
+}
+
+.letter.open .letter-icon{transform: rotate(180deg);}
+
+/* =========================
+   Love letter inline expansion
+========================= */
+.loveletter.open{
+  box-shadow: 0 40px 140px rgba(0,0,0,0.55);
+}
+
+.inline-letter{
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  background:
+    radial-gradient(900px 420px at 20% 0%, rgba(255,77,125,0.18), transparent),
+    rgba(20,16,26,0.92);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.86);
+  line-height: 1.85;
+}
+
+.inline-letter-title{
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.9);
+}
+
+.inline-letter-sign{
+  margin-top: 14px;
+  color: rgba(255,255,255,0.74);
+}
+
+/* =========================
+   Final surprise inline box
+========================= */
+.final-box{
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  background:
+    radial-gradient(900px 420px at 20% 0%, rgba(255,77,125,0.18), transparent),
+    rgba(20,16,26,0.92);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 28px 110px rgba(0,0,0,0.55);
+}
+
+.final-box-title{
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.final-box-body{
+  color: rgba(255,255,255,0.84);
+  line-height: 1.8;
+}
+
+/* Mobile spacing improvements */
+@media (max-width: 520px){
+  .popover{max-width: calc(100vw - 24px) !important;}
+}
+
+/* ===== Hold-heart: beat + burst ===== */
+.hold-heart{
+  font-size:72px;
+  display:inline-block;
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:manipulation;
+  text-shadow: 0 0 34px rgba(255,77,125,0.45);
+  transition: transform .2s ease, filter .2s ease;
+}
+
+.hold-heart.is-holding{
+  animation: heartBeat 0.55s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(255,77,125,0.55));
+}
+
+@keyframes heartBeat{
+  0%{transform:scale(1);}
+  25%{transform:scale(1.12);}
+  45%{transform:scale(0.98);}
+  70%{transform:scale(1.16);}
+  100%{transform:scale(1);}
+}
+
+/* Burst particles */
+.burst{
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: burstFly 700ms ease-out forwards;
+  box-shadow: 0 0 18px rgba(255,77,125,0.45);
+}
+
+@keyframes burstFly{
+  from{ transform: translate(0,0) scale(1); opacity: 1; }
+  to{ transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
 }
