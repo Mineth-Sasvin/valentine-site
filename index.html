@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0b0a10">
+  <title>For My Valentine ❤️</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- PASSWORD INTRO OVERLAY -->
+  <div id="passwordGate" class="gate">
+    <div class="gate-card">
+      <h1 class="gate-title">For Someone Very Special ❤️</h1>
+      <p class="gate-sub">Enter the secret code to unlock this experience</p>
+
+      <input type="password" id="passwordInput" placeholder="Enter secret code..." inputmode="numeric" />
+      <button id="unlockBtn">Unlock</button>
+
+      <p id="errorMsg" class="error-msg"></p>
+
+      <div id="countdownContainer" class="countdown hidden">
+        <p>Preparing something beautiful...</p>
+        <div id="countdownNumber">3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating hearts background -->
+  <div class="hearts" aria-hidden="true"></div>
+
+  <!-- Intro / Landing -->
+  <header class="hero">
+    <p class="mini">A little website made with love</p>
+    <h1>Happy Valentine’s Day, <span id="hisName">My Love</span> ❤️</h1>
+    <p class="subtitle">I made this just for you. Take a deep breath… and open your surprise.</p>
+
+    <div class="hero-actions">
+      <button class="btn primary" id="openSurprise">Open Your Surprise ✨</button>
+      <button class="btn ghost" id="toggleMusic">Play Music ♪</button>
+    </div>
+
+    <p class="hint">Tip: click the hearts… there are secrets 😉</p>
+  </header>
+
+  <main id="content" class="hidden">
+    <!-- Our Story -->
+    <section class="section">
+      <h2>Our Story 💞</h2>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section">
+      <h2>Memory Gallery 📸</h2>
+      <p class="section-sub">Click any photo… there’s a message inside.</p>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- Videos -->
+    <section class="section">
+      <h2>Our Videos 🎥</h2>
+      <p class="section-sub">A little movie of us… a memory you can replay anytime.</p>
+      <div class="videos" id="videos"></div>
+    </section>
+
+    <!-- Open When letters -->
+    <section class="section">
+      <h2>Open When… 💌</h2>
+      <p class="section-sub">Little letters for the moments you need me the most.</p>
+      <div class="letters" id="letters"></div>
+    </section>
+
+    <!-- Love Letter Surprise -->
+    <section class="section">
+      <h2>A Letter For You 💌</h2>
+      <p class="section-sub">Tap the seal… this is my heart in words.</p>
+
+      <div class="loveletter" id="loveLetterCard">
+        <div class="loveletter-top">
+          <div class="stamp">💗</div>
+          <div class="tofrom">
+            <div class="to">To: <span id="toName">My Love</span></div>
+            <div class="from">From: Your Valentine</div>
+          </div>
+        </div>
+
+        <div class="seal" aria-label="Open letter">
+          <span class="seal-heart">❤</span>
+        </div>
+
+        <div class="loveletter-hint">Open the seal to read the letter</div>
+      </div>
+    </section>
+
+    <!-- Curiosity Hold Heart -->
+    <section class="section curiosity">
+      <h2>Before You Go…</h2>
+      <p class="section-sub">There is one more thing I want you to know. Hold this heart for 3 seconds.</p>
+      <div class="hold-heart" id="holdHeart" aria-label="Hold for secret">❤</div>
+    </section>
+
+    <!-- Final -->
+    <section class="final">
+      <h2>One last thing…</h2>
+      <p class="type" id="typewriter"></p>
+      <button class="btn primary" id="finalSurprise">One Last Surprise ❤️</button>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal hidden" id="modal">
+    <div class="modal-card">
+      <button class="modal-close" id="closeModal" aria-label="Close">✕</button>
+      <h3 id="modalTitle"></h3>
+      <div id="modalText"></div>
+    </div>
+  </div>
+
+  <!-- Background music (put your file here: assets/music/love.mp3) -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/music/love.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

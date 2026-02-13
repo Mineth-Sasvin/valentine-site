@@ -1,0 +1,514 @@
+:root{
+  --bg:#0b0a10;
+  --card: rgba(255,255,255,0.08);
+  --text:#ffffff;
+  --muted: rgba(255,255,255,0.72);
+  --accent:#ff4d7d;
+  --accent2:#ffd1dc;
+  --glow: 0 0 25px rgba(255,77,125,0.35);
+  --radius: 20px;
+
+  --safeTop: env(safe-area-inset-top, 0px);
+  --safeRight: env(safe-area-inset-right, 0px);
+  --safeBottom: env(safe-area-inset-bottom, 0px);
+  --safeLeft: env(safe-area-inset-left, 0px);
+}
+
+*{box-sizing:border-box;}
+
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+}
+
+body{
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1000px 600px at 20% 10%, rgba(255,77,125,0.25), transparent),
+    radial-gradient(900px 600px at 80% 20%, rgba(255,209,220,0.18), transparent),
+    var(--bg);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition: backdrop-filter 0.6s ease;
+}
+
+body.scrolled{
+  backdrop-filter: blur(6px);
+}
+
+img,video{max-width:100%;display:block;}
+
+.hidden{display:none !important;}
+
+/* =========================================
+   PASSWORD GATE
+========================================= */
+.gate{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:
+    radial-gradient(900px 600px at 20% 20%, rgba(255,77,125,0.25), transparent),
+    #0b0a10;
+  z-index:9999;
+}
+
+.gate-card{
+  text-align:center;
+  padding:40px 30px;
+  border-radius:28px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 40px 120px rgba(0,0,0,0.6);
+  max-width:420px;
+  width:90%;
+}
+
+.gate-title{font-size:26px;margin-bottom:10px;}
+.gate-sub{color:var(--muted);margin-bottom:20px;}
+
+.gate input{
+  width:100%;
+  padding:14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.05);
+  color:white;
+  text-align:center;
+  margin-bottom:14px;
+}
+
+.gate button{
+  width:100%;
+  padding:14px;
+  border-radius:999px;
+  border:none;
+  background:linear-gradient(135deg,#ff4d7d,#ffd1dc);
+  color:black;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.error-msg{margin-top:10px;color:#ff6b6b;}
+
+#countdownNumber{
+  font-size:60px;
+  font-weight:700;
+  margin-top:10px;
+  text-shadow:0 0 30px rgba(255,77,125,0.6);
+}
+
+/* =========================================
+   HERO
+========================================= */
+.hero{
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:60px 20px;
+}
+
+.mini{
+  letter-spacing:0.25em;
+  font-size:12px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+h1{
+  font-size:clamp(32px,6vw,60px);
+  margin:10px 0;
+  text-shadow:var(--glow);
+}
+
+.subtitle{
+  max-width:700px;
+  color:var(--muted);
+  margin-bottom:20px;
+  line-height:1.6;
+}
+
+.hero-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.btn{
+  padding:14px 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.06);
+  color:white;
+  cursor:pointer;
+  min-height:44px;
+  transition:0.2s ease;
+}
+
+.btn.primary{
+  background:linear-gradient(135deg,#ff4d7d,#ffd1dc);
+  border:none;
+  box-shadow:var(--glow);
+}
+
+.btn:hover{transform:translateY(-2px);}
+
+/* =========================================
+   SECTION ANIMATION
+========================================= */
+.section,.final{
+  opacity:0;
+  transform:translateY(30px);
+  transition:all 0.8s ease;
+  padding:70px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.section.visible,.final.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.section h2{font-size:clamp(22px,4.5vw,34px);margin-bottom:14px;}
+.section-sub{color:var(--muted);margin-bottom:20px;}
+
+/* =========================================
+   TIMELINE
+========================================= */
+.timeline{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:16px;
+  border:1px solid rgba(255,255,255,0.12);
+}
+
+/* =========================================
+   POLAROID GALLERY
+========================================= */
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:18px;
+}
+
+.polaroid{
+  padding:14px 14px 52px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.14);
+  box-shadow:0 18px 60px rgba(0,0,0,0.35);
+  transition:0.25s ease;
+  cursor:pointer;
+}
+
+.polaroid:hover{transform:translateY(-6px) scale(1.02);}
+
+.polaroid img{
+  height:240px;
+  object-fit:cover;
+  border-radius:14px;
+}
+
+.label{
+  text-align:center;
+  margin-top:12px;
+  font-size:13px;
+  letter-spacing:0.06em;
+}
+
+/* =========================================
+   VIDEO WRAPPER (CINEMATIC)
+========================================= */
+.video-wrapper{
+  width:100%;
+  max-width:720px;
+  margin:auto;
+  border-radius:24px;
+  overflow:hidden;
+  position:relative;
+  box-shadow:0 30px 100px rgba(0,0,0,0.55);
+}
+
+.video-wrapper::before{
+  content:"";
+  display:block;
+  padding-top:56.25%;
+}
+
+.video-wrapper video,
+.video-wrapper iframe{
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* =========================================
+   LOVE LETTER
+========================================= */
+.loveletter{
+  max-width:720px;
+  margin:auto;
+  padding:20px;
+  border-radius:24px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
+  text-align:center;
+  cursor:pointer;
+  transition:0.2s ease;
+}
+
+.loveletter:hover{transform:scale(1.02);}
+
+.seal{
+  margin:20px auto;
+  width:70px;height:70px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#ff4d7d,#ffd1dc);
+  font-size:24px;
+}
+
+/* =========================================
+   HOLD HEART
+========================================= */
+.hold-heart{
+  font-size:50px;
+  margin-top:20px;
+  cursor:pointer;
+  transition:0.2s ease;
+}
+.hold-heart:active{transform:scale(1.2);}
+
+/* =========================================
+   MODAL
+========================================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  z-index:1000;
+}
+
+.modal.hidden{display:none;}
+
+.modal-card{
+  width:min(520px,100%);
+  background:rgba(20,16,26,0.95);
+  border-radius:var(--radius);
+  padding:20px;
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 25px 80px rgba(0,0,0,0.55);
+}
+
+.modal-close{
+  float:right;
+  background:none;
+  border:none;
+  color:var(--muted);
+  cursor:pointer;
+}
+
+/* =========================================
+   FLOATING HEARTS
+========================================= */
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:1;
+}
+
+.heart{
+  position:absolute;
+  animation:floatUp linear forwards;
+  opacity:0.8;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(110vh);}
+  to{transform:translateY(-20vh);}
+}
+
+/* =========================================
+   MOBILE OPTIMIZATION
+========================================= */
+@media(max-width:520px){
+  .timeline,
+  .gallery{
+    grid-template-columns:1fr;
+  }
+
+  .btn{width:100%;}
+}
+
+/* ===== Premium romantic typography + spacing helpers ===== */
+.muted{color: rgba(255,255,255,0.72); line-height:1.6;}
+.modal-h{font-size:20px;font-weight:750;letter-spacing:.02em;margin-bottom:8px;}
+.modal-p{color:rgba(255,255,255,0.82);line-height:1.75;font-size:16px;margin:0;}
+
+/* ===== Polaroid gallery premium ===== */
+.polaroid{
+  position:relative;
+  padding:14px 14px 50px;
+  border-radius:24px;
+  background: rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 22px 80px rgba(0,0,0,0.45);
+  backdrop-filter: blur(14px);
+  cursor:pointer;
+  transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
+  transition: transform .28s ease, box-shadow .28s ease;
+  overflow:hidden;
+}
+
+.polaroid:hover{
+  transform: rotate(0deg) translateY(-8px) scale(1.02);
+  box-shadow: 0 30px 110px rgba(0,0,0,0.55);
+}
+
+.polaroid img{
+  width:100%;
+  height:240px;
+  object-fit:cover;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.14);
+}
+
+.polaroid .label{
+  position:absolute;
+  left:14px; right:14px; bottom:14px;
+  text-align:center;
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+
+.polaroid-sticker{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:36px;
+  height:36px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(135deg, rgba(255,77,125,0.95), rgba(255,209,220,0.75));
+  border:1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 0 24px rgba(255,77,125,0.35);
+}
+
+/* ===== Open When letters (proper clickable cards) ===== */
+.letters{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:16px;
+}
+
+.letter{
+  background: rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius: 24px;
+  padding:18px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+  cursor:pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.letter:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 28px 90px rgba(0,0,0,0.45);
+}
+
+.letter strong{
+  font-size:18px;
+  display:block;
+  margin-bottom:8px;
+}
+
+.letter-sub{
+  color: rgba(255,255,255,0.72);
+  font-size: 14px;
+}
+
+/* ===== Love letter modal styling (beautiful reading) ===== */
+.modal-card.letter-mode{
+  background:
+    radial-gradient(900px 500px at 20% 0%, rgba(255,77,125,0.18), transparent),
+    rgba(20,16,26,0.94);
+}
+
+.letter-title{
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.90);
+  margin-bottom:10px;
+}
+
+.letter-body{
+  color:rgba(255,255,255,0.84);
+  line-height:1.85;
+  font-size:16px;
+}
+
+.letter-sign{
+  margin-top:14px;
+  color:rgba(255,255,255,0.74);
+}
+
+/* ===== Video wrapper (always fits nicely) ===== */
+.videos{display:flex; justify-content:center;}
+.video-wrapper{
+  width:100%;
+  max-width:780px;
+  border-radius: 26px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 30px 120px rgba(0,0,0,0.55);
+  position:relative;
+}
+.video-wrapper::before{content:"";display:block;padding-top:56.25%;}
+.video-wrapper video,.video-wrapper iframe{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover;
+  border:0;
+}
+
+/* ===== Mobile polish ===== */
+@media (max-width: 520px){
+  .polaroid img{height:220px;}
+  .letters{grid-template-columns:1fr;}
+}
