@@ -143,7 +143,6 @@ openBtn?.addEventListener("click", (e) => {
   startTypewriter();
   startMusicIfPossible();
   setupRevealObserver();
-  // Don’t scroll to top; just gently move to next section
   document.querySelector(".section")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
@@ -153,7 +152,7 @@ window.addEventListener("scroll", () => {
   else document.body.classList.remove("scrolled");
 });
 
-// ---------- Scroll reveal (starts after content shown) ----------
+// ---------- Scroll reveal ----------
 let observerStarted = false;
 function setupRevealObserver(){
   if (observerStarted) return;
@@ -200,23 +199,18 @@ function showPopover(anchorEl, title, text){
 
   p.classList.remove("hidden");
 
-  // Position near anchor (no scrolling!)
   const r = anchorEl.getBoundingClientRect();
   const pad = 12;
 
-  // default below
   let top = r.bottom + pad;
   let left = r.left;
 
-  // keep inside screen
   const width = Math.min(340, window.innerWidth - 24);
   p.style.width = width + "px";
 
-  // if goes out right, shift left
   if (left + width > window.innerWidth - 12) left = window.innerWidth - width - 12;
   if (left < 12) left = 12;
 
-  // if goes out bottom, show above
   const estimatedHeight = 190;
   if (top + estimatedHeight > window.innerHeight - 12) {
     top = r.top - pad - estimatedHeight;
@@ -232,7 +226,6 @@ function hidePopover(){
   pop.classList.add("hidden");
 }
 
-// Reposition on resize/scroll if open
 window.addEventListener("resize", () => { if (pop && !pop.classList.contains("hidden")) hidePopover(); });
 window.addEventListener("scroll", () => { if (pop && !pop.classList.contains("hidden")) hidePopover(); }, { passive:true });
 
@@ -250,7 +243,7 @@ CONFIG.timeline.forEach(item => {
   timeline.appendChild(div);
 });
 
-// Gallery (opens POPOVER near photo)
+// Gallery
 const gallery = $("gallery");
 gallery.innerHTML = "";
 
@@ -304,7 +297,7 @@ CONFIG.videos.forEach(v => {
   videos.appendChild(wrapper);
 });
 
-// Open When letters (INLINE expand inside card)
+// Open When letters
 const letters = $("letters");
 letters.innerHTML = "";
 
@@ -335,7 +328,6 @@ CONFIG.openWhen.forEach((l) => {
     closeAllLetters(willOpen ? wrap : null);
     wrap.classList.toggle("open");
 
-    // NO scroll-to-top. If needed, only a tiny adjust (stay near)
     if (wrap.classList.contains("open")) {
       wrap.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
@@ -344,7 +336,7 @@ CONFIG.openWhen.forEach((l) => {
   letters.appendChild(wrap);
 });
 
-// Love letter (opens INLINE - not modal)
+// Love letter inline
 const loveLetterCard = $("loveLetterCard");
 loveLetterCard.innerHTML = loveLetterCard.innerHTML + `
   <div class="inline-letter hidden" id="inlineLoveLetter">
@@ -362,9 +354,23 @@ loveLetterCard.addEventListener("click", (e) => {
   inlineLove.scrollIntoView({ behavior: "smooth", block: "nearest" });
 });
 
-// Hold heart secret (beat while holding + burst + pop sound)
-const holdHeart = $("holdHeart");
-const popSfx = $("popSfx");
+// =====================
+// HOLD HEART (Fixed: hidden until unlocked)
+// =====================
+const holdHeart = document.getElementById("holdHeart");
+const popSfx = document.getElementById("popSfx");
+
+let holdMsg = document.getElementById("holdMsg");
+if (holdHeart && !holdMsg){
+  holdMsg = document.createElement("div");
+  holdMsg.id = "holdMsg";
+  holdMsg.className = "hold-msg hidden"; // ✅ hidden by default
+  holdMsg.innerHTML = `
+    <b>You found it ❤️</b><br>
+    If you stayed this long… it means you truly felt this. And that means everything to me.
+  `;
+  holdHeart.insertAdjacentElement("afterend", holdMsg);
+}
 
 let holdTimer = null;
 let unlockedOnce = false;
@@ -373,7 +379,7 @@ function playPop(){
   if (!popSfx) return;
   try{
     popSfx.currentTime = 0;
-    popSfx.volume = 0.7;
+    popSfx.volume = 0.8;
     popSfx.play();
   }catch(_e){}
 }
@@ -383,14 +389,13 @@ function burstAt(el){
   const cx = r.left + r.width / 2;
   const cy = r.top + r.height / 2;
 
-  const pieces = 14;
-  for (let i=0; i<pieces; i++){
+  const pieces = 16;
+  for (let i = 0; i < pieces; i++){
     const p = document.createElement("div");
     p.className = "burst";
 
-    // random direction
     const angle = Math.random() * Math.PI * 2;
-    const dist  = 40 + Math.random() * 55;
+    const dist  = 40 + Math.random() * 60;
     const dx = Math.cos(angle) * dist;
     const dy = Math.sin(angle) * dist;
 
@@ -399,11 +404,12 @@ function burstAt(el){
     p.style.setProperty("--dx", dx + "px");
     p.style.setProperty("--dy", dy + "px");
 
-    // random size + soft pink/white glow
     const size = 6 + Math.random() * 10;
     p.style.width = size + "px";
     p.style.height = size + "px";
-    p.style.background = Math.random() > 0.35 ? "rgba(255,77,125,0.95)" : "rgba(255,255,255,0.9)";
+    p.style.background = Math.random() > 0.35
+      ? "rgba(255,77,125,0.95)"
+      : "rgba(255,255,255,0.92)";
 
     document.body.appendChild(p);
     setTimeout(() => p.remove(), 800);
@@ -411,24 +417,18 @@ function burstAt(el){
 }
 
 function startHold(){
-  if (!holdHeart) return;
+  if (!holdHeart || unlockedOnce) return;
+
   holdHeart.classList.add("is-holding");
 
-  // easier on phones: 2 seconds
   holdTimer = setTimeout(() => {
-    if (unlockedOnce) return;
     unlockedOnce = true;
-
     holdHeart.classList.remove("is-holding");
-    playPop();
-    burstAt(holdHeart);
 
-    // show message near heart (uses your popover system)
-    showPopover(
-      holdHeart,
-      "You found it ❤️",
-      "If you stayed this long… it means you truly felt this. And that means everything to me."
-    );
+    if (holdMsg) holdMsg.classList.remove("hidden");
+
+    burstAt(holdHeart);
+    playPop();
   }, 2000);
 }
 
@@ -436,6 +436,8 @@ function endHold(){
   if (!holdHeart) return;
   holdHeart.classList.remove("is-holding");
   if (holdTimer) clearTimeout(holdTimer);
+
+  if (!unlockedOnce && holdMsg) holdMsg.classList.add("hidden");
 }
 
 if (holdHeart){
@@ -448,8 +450,7 @@ if (holdHeart){
   holdHeart.addEventListener("touchcancel", endHold);
 }
 
-
-// Final surprise (INLINE - not modal)
+// Final surprise inline
 const finalBtn = $("finalSurprise");
 const finalSection = document.querySelector(".final");
 
@@ -485,7 +486,7 @@ function startTypewriter(){
   }, 28);
 }
 
-// Floating hearts (7-click secret popover near clicked heart)
+// Floating hearts
 const heartsBox = document.querySelector(".hearts");
 let heartClicks = 0;
 
@@ -513,3 +514,40 @@ function spawnHeart(){
 
 const isMobile = window.matchMedia("(max-width: 520px)").matches;
 setInterval(spawnHeart, isMobile ? 520 : 360);
+
+// =====================
+// Golden Moment: Hold to Reveal (2s)
+// =====================
+const goldenFrame = document.getElementById("goldenFrame");
+const goldenHoldBtn = document.getElementById("goldenHoldBtn");
+
+let goldenTimer = null;
+let goldenRevealed = false;
+
+function goldenStart(){
+  if (!goldenFrame || !goldenHoldBtn || goldenRevealed) return;
+
+  goldenHoldBtn.textContent = "Holding… 💛";
+  goldenTimer = setTimeout(() => {
+    goldenRevealed = true;
+    goldenFrame.classList.add("reveal");
+    goldenHoldBtn.textContent = "Revealed ✨";
+  }, 2000);
+}
+
+function goldenEnd(){
+  if (!goldenHoldBtn) return;
+  if (goldenTimer) clearTimeout(goldenTimer);
+
+  if (!goldenRevealed) goldenHoldBtn.textContent = "Hold to Reveal 💛 (2s)";
+}
+
+if (goldenHoldBtn){
+  goldenHoldBtn.addEventListener("mousedown", goldenStart);
+  goldenHoldBtn.addEventListener("mouseup", goldenEnd);
+  goldenHoldBtn.addEventListener("mouseleave", goldenEnd);
+
+  goldenHoldBtn.addEventListener("touchstart", goldenStart, { passive:true });
+  goldenHoldBtn.addEventListener("touchend", goldenEnd);
+  goldenHoldBtn.addEventListener("touchcancel", goldenEnd);
+}
