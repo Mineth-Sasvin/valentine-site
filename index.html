@@ -36,8 +36,19 @@
   <!-- Intro / Landing -->
   <header class="hero">
     <p class="mini">A little website made with love</p>
-    <h1>Happy Valentine’s Day, <span id="hisName">My Love</span> ❤️</h1>
-    <p class="subtitle">I made this just for you. Take a deep breath… and open your surprise.</p>
+
+    <!-- Handwritten intro line + handwritten name -->
+    <div class="hero-intro">
+      <div class="dear-line" id="dearLine"></div>
+      <div class="handwrite-name" id="handwriteName"></div>
+    </div>
+
+    <!-- CLEAN hero title (no name repetition) -->
+    <h1 class="hero-title hero-clean">Happy Valentine’s Day 💖</h1>
+
+    <p class="hero-sub-love hero-clean-sub">
+      My safest place. My calm. My forever.
+    </p>
 
     <div class="hero-actions">
       <button class="btn primary" id="openSurprise">Open Your Surprise ✨</button>
@@ -45,6 +56,9 @@
     </div>
 
     <p class="hint">Tip: click the hearts… there are secrets 😉</p>
+
+    <!-- Keep these IDs for JS compatibility (hidden, but still used by script.js) -->
+    <span id="hisName" class="hidden" aria-hidden="true"></span>
   </header>
 
   <main id="content" class="hidden">
@@ -53,6 +67,47 @@
       <h2>Our Story 💞</h2>
       <div class="timeline" id="timeline"></div>
     </section>
+
+    <section class="section reasons">
+      <h2>Reasons I Love You 🥺💗</h2>
+      <p class="section-sub">Tap each card… I wrote these with my whole heart.</p>
+
+      <div class="reasons-grid" id="reasonsGrid"></div>
+      
+    </section>
+
+  <section class="section meter">
+    <h2>Love Meter 💘</h2>
+    <p class="section-sub">Slide it… and watch what happens 😌</p>
+
+    <div class="meter-card" id="meterCard">
+      <div class="meter-top">
+        <div class="meter-percent"><span id="loveValue">30</span>%</div>
+        <div class="meter-badge" id="meterBadge">soft spark ✨</div>
+      </div>
+
+      <div class="meter-track">
+        <input id="loveRange" class="love-range" type="range" min="0" max="100" value="30">
+        <div class="meter-fill" id="meterFill"></div>
+      </div>
+
+      <div class="meter-msg" id="loveMsg">A soft little crush…</div>
+
+      <div class="meter-actions">
+        <button class="btn primary" id="loveBurstBtn" type="button">Make it rain hearts ✨</button>
+        <button class="btn ghost" id="loveNoteBtn" type="button">A tiny love note 💌</button>
+      </div>
+
+      <div class="meter-note hidden" id="loveNoteBox">
+        <b>Little Angel Dr. Sandamal…</b><br>
+        If you’re reading this… you’re my favorite part of every day. 💗
+      </div>
+    </div>
+
+    <!-- Full-screen rain layer -->
+    <div class="love-rain-layer" id="loveRainLayer" aria-hidden="true"></div>
+  </section>
+
 
     <!-- Gallery -->
     <section class="section">
@@ -97,39 +152,45 @@
       </div>
     </section>
 
+    <!-- Golden Moment (p9.jpeg) -->
     <section class="section golden" id="golden">
-  <h2 class="section-title">Our Golden Moment ✨</h2>
-  <p class="section-sub">A memory I never want to forget…</p>
+      <h2 class="section-title">Our Golden Moment ✨</h2>
+      <p class="section-sub">A memory I never want to forget…</p>
 
-  <div class="golden-wrap">
-    <div class="golden-frame" id="goldenFrame">
-      <img src="assets/photos/p9.jpeg" alt="Our golden memory" class="golden-img" />
+      <div class="golden-wrap">
+        <div class="golden-frame" id="goldenFrame">
+          <img src="assets/photos/p9.jpeg" alt="Our golden memory" class="golden-img" />
 
-      <div class="golden-overlay" id="goldenOverlay">
-        <div class="golden-note">
-          <div class="golden-note-title">This is my favorite kind of peace…</div>
-          <div class="golden-note-text">
-            Holding your hand like this feels like home.  
-            Even when the world is loud… you make everything quiet inside me. ❤️
+          <div class="golden-overlay" id="goldenOverlay">
+            <div class="golden-note">
+              <div class="golden-note-title">My Little Angel Dr. Sandamal 💛</div>
+              <div class="golden-note-text">
+                Holding your hand like this feels like holding peace itself.
+                You are not just my love…
+                you are my calm,
+                my strength,
+                my soft place to land.
+                Even when life feels overwhelming,
+                I know I have my Little Angel beside me.
+              </div>
+              <div class="golden-note-sign">Forever yours ❤️</div>
+            </div>
           </div>
-          <div class="golden-note-sign">— Your Valentine</div>
         </div>
+
+        <button class="golden-btn" id="goldenHoldBtn" type="button">
+          Hold to Reveal 💛 (2s)
+        </button>
+        <div class="golden-hint">Tip: hold the button gently… like holding my heart.</div>
       </div>
-    </div>
-
-    <button class="golden-btn" id="goldenHoldBtn" type="button">
-      Hold to Reveal 💛 (2s)
-    </button>
-    <div class="golden-hint">Tip: hold the button gently… like holding my heart.</div>
-  </div>
-</section>
-
+    </section>
 
     <!-- Curiosity Hold Heart -->
     <section class="section curiosity">
       <h2>Before You Go…</h2>
       <p class="section-sub">There is one more thing I want you to know. Hold this heart for 3 seconds.</p>
       <div class="hold-heart" id="holdHeart">❤</div>
+      <!-- NOTE: holdMsg is created by JS automatically after this heart -->
     </section>
 
     <!-- Final -->
@@ -140,7 +201,7 @@
     </section>
   </main>
 
-  <!-- Modal -->
+  <!-- Optional old modal (safe to keep) -->
   <div class="modal hidden" id="modal">
     <div class="modal-card">
       <button class="modal-close" id="closeModal" aria-label="Close">✕</button>
@@ -149,15 +210,15 @@
     </div>
   </div>
 
-  <!-- Background music (put your file here: assets/music/love.mp3) -->
+  <!-- Background music -->
   <audio id="bgMusic" loop preload="auto">
     <source src="assets/music/love.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Pop sound for heart bursts -->
   <audio id="popSfx" preload="auto">
     <source src="assets/sfx/pop.mp3" type="audio/mpeg">
   </audio>
-
 
   <script src="script.js"></script>
 </body>
