@@ -8,7 +8,7 @@ const $ = (id) => document.getElementById(id);
 
 // ====== EDIT THESE ======
 const CONFIG = {
-  hisName: "My Love",
+  hisName: "Little Angel Dr. Sandamal",
 
   timeline: [
     { title: "The day we met", text: "I still remember the feeling… like the universe said ‘pay attention’." },
@@ -50,7 +50,9 @@ I love you more than any fight we'll ever have. I love you more than any amount 
 
 I love you more than anything. So from now on, know that when I say I love you, I don't just say it out of habit. I say it as a reminder to you of this day, those promises, and you're the best goddamn thing that's ever happened to me.
 
-My darling mage pana, I adore you.`;
+My Little Angel Dr. Sandamal,
+you are the most precious blessing my heart has ever known.
+I adore you. I choose you. I cherish you. Always.`;
 
 // ---------- Elements ----------
 const content = $("content");
@@ -92,7 +94,11 @@ function startCountdown(){
       clearInterval(interval);
       passwordGate.style.opacity = "0";
       passwordGate.style.transition = "opacity .9s ease";
-      setTimeout(() => passwordGate.style.display = "none", 900);
+      setTimeout(() => {
+        passwordGate.style.display = "none";
+        startHeroHandwriting(); // ✅ start handwriting right after unlock
+      }, 900);
+
     }
   }, 1000);
 }
@@ -242,6 +248,177 @@ CONFIG.timeline.forEach(item => {
   div.innerHTML = `<h3>${item.title}</h3><p class="muted">${item.text}</p>`;
   timeline.appendChild(div);
 });
+
+/// =========================================================
+// Reasons I Love You — 100% Reliable (2D Flip Illusion)
+// =========================================================
+const reasonsGrid = document.getElementById("reasonsGrid");
+
+const REASONS = [
+  { title: "You feel like home", text: "Even on messy days, one message from you makes me breathe again." },
+  { title: "Your kindness", text: "The way you care… it makes me feel safe, seen, and loved." },
+  { title: "Your calm energy", text: "Being with you quiets my overthinking. You bring peace to my heart." },
+  { title: "How you look at me", text: "That look… it feels like I’m the only person in the world." },
+  { title: "You make life softer", text: "Everything feels lighter when you’re with me. Like love is easy again." },
+  { title: "I choose you", text: "Not just on good days I choose you on every day. Always." }
+];
+
+if (reasonsGrid){
+  reasonsGrid.innerHTML = "";
+
+  REASONS.forEach((r, i) => {
+    const card = document.createElement("div");
+    card.className = "r-card";
+    card.setAttribute("role", "button");
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("aria-label", `Reveal reason ${i+1}`);
+
+    card.innerHTML = `
+      <div class="r-face r-front">
+        <div class="r-tag">Tap to reveal</div>
+        <div class="r-title">${r.title}</div>
+        <div class="r-tip">💗 Little secret #${i+1}</div>
+      </div>
+
+      <div class="r-face r-back">
+        <div class="r-title">${r.title}</div>
+        <div class="r-text">${r.text}</div>
+        <div class="r-tip">Tap again to close</div>
+      </div>
+    `;
+
+    const toggle = () => card.classList.toggle("is-open");
+
+    card.addEventListener("click", toggle);
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        toggle();
+      }
+    });
+
+    reasonsGrid.appendChild(card);
+  });
+}
+
+
+// =====================
+// Love Meter — Romantic Upgrade + Full-screen Heart Rain
+// =====================
+const loveRange = document.getElementById("loveRange");
+const loveValue = document.getElementById("loveValue");
+const loveMsg = document.getElementById("loveMsg");
+const loveBurstBtn = document.getElementById("loveBurstBtn");
+const meterFill = document.getElementById("meterFill");
+const meterBadge = document.getElementById("meterBadge");
+const meterCard = document.getElementById("meterCard");
+
+const loveNoteBtn = document.getElementById("loveNoteBtn");
+const loveNoteBox = document.getElementById("loveNoteBox");
+
+const loveRainLayer = document.getElementById("loveRainLayer");
+
+function meterMessage(v){
+  if (v < 15) return { msg: "A tiny spark…", badge: "soft spark ✨" };
+  if (v < 35) return { msg: "A soft little crush…", badge: "sweet crush 💗" };
+  if (v < 55) return { msg: "Okay… I’m falling 😌", badge: "falling… 🥺" };
+  if (v < 75) return { msg: "I’m really, really in love 💞", badge: "deep love 💞" };
+  if (v < 90) return { msg: "Little Angel Dr. Sandamal… I love you more than words. 💗", badge: "forever 💍" };
+  return { msg: "I choose you — today, tomorrow, always. ❤️", badge: "soulmate ♾️" };
+}
+
+function setFill(v){
+  if (!meterFill) return;
+  meterFill.style.width = `${v}%`;
+}
+
+function setHot(v){
+  if (!meterCard) return;
+  if (v >= 85) meterCard.classList.add("is-hot");
+  else meterCard.classList.remove("is-hot");
+}
+
+function startFullScreenHeartRain(durationMs = 5200){
+  if (!loveRainLayer) return;
+  loveRainLayer.classList.add("active");
+
+  const icons = ["❤","💗","💖","💘","💞","💕","✨"];
+  const start = performance.now();
+
+  const spawn = () => {
+    const now = performance.now();
+    if (now - start > durationMs) return;
+
+    // spawn rate: 6-10 per second
+    const count = 1 + Math.floor(Math.random() * 2);
+
+    for (let i = 0; i < count; i++){
+      const h = document.createElement("div");
+      h.className = "rain-heart";
+      h.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+      const left = Math.random() * 100;
+      const size = 14 + Math.random() * 26;
+      const dur  = 2.8 + Math.random() * 2.2;
+
+      h.style.left = left + "vw";
+      h.style.fontSize = size + "px";
+      h.style.animationDuration = dur + "s";
+
+      const drift = (-30 + Math.random() * 60) + "px";
+      const rot = (-220 + Math.random() * 440) + "deg";
+      h.style.setProperty("--drift", drift);
+      h.style.setProperty("--rot", rot);
+
+      loveRainLayer.appendChild(h);
+      setTimeout(() => h.remove(), dur * 1000 + 200);
+    }
+
+    requestAnimationFrame(spawn);
+  };
+
+  requestAnimationFrame(spawn);
+
+  setTimeout(() => {
+    // cleanup + hide
+    loveRainLayer.classList.remove("active");
+    loveRainLayer.innerHTML = "";
+  }, durationMs + 1800);
+}
+
+if (loveRange && loveValue && loveMsg){
+  const apply = () => {
+    const v = Number(loveRange.value);
+    loveValue.textContent = v;
+
+    const { msg, badge } = meterMessage(v);
+    loveMsg.textContent = msg;
+    if (meterBadge) meterBadge.textContent = badge;
+
+    setFill(v);
+    setHot(v);
+
+    // Romantic surprise when reaching 95+
+    if (v >= 95){
+      startFullScreenHeartRain(3600);
+    }
+  };
+
+  loveRange.addEventListener("input", apply);
+  apply();
+}
+
+loveBurstBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  startFullScreenHeartRain(6500);
+});
+
+loveNoteBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  loveNoteBox?.classList.toggle("hidden");
+});
+
+
 
 // Gallery
 const gallery = $("gallery");
@@ -550,4 +727,53 @@ if (goldenHoldBtn){
   goldenHoldBtn.addEventListener("touchstart", goldenStart, { passive:true });
   goldenHoldBtn.addEventListener("touchend", goldenEnd);
   goldenHoldBtn.addEventListener("touchcancel", goldenEnd);
+}
+
+// =====================
+// Handwritten Intro Animation
+// =====================
+function handwrite(el, text, speedMin = 35, speedMax = 70){
+  return new Promise((resolve) => {
+    if (!el) return resolve();
+    el.innerHTML = "";
+    const cursor = document.createElement("span");
+    cursor.className = "type-cursor";
+    cursor.textContent = "|";
+    el.appendChild(cursor);
+
+    let i = 0;
+    const typeNext = () => {
+      const ch = text[i];
+      if (ch === undefined){
+        // stop cursor
+        cursor.remove();
+        resolve();
+        return;
+      }
+      cursor.insertAdjacentText("beforebegin", ch);
+      i++;
+
+      // natural handwriting rhythm: slight pauses on dots/commas
+      let delay = Math.floor(speedMin + Math.random() * (speedMax - speedMin));
+      if ([".", ",", "…", "!", "?"].includes(ch)) delay += 140;
+      if (ch === " ") delay += 40;
+
+      setTimeout(typeNext, delay);
+    };
+    typeNext();
+  });
+}
+
+async function startHeroHandwriting(){
+  const dear = document.getElementById("dearLine");
+  const name = document.getElementById("handwriteName");
+
+  // Prevent replay if user refreshes section
+  if (name?.dataset.done === "1") return;
+  if (name) name.dataset.done = "1";
+
+  await handwrite(dear, "DEAR LITTLE ANGEL…", 20, 36);
+  await handwrite(name, "Little Angel Dr. Sandamal", 35, 65);
+
+  name?.classList.add("done");
 }
